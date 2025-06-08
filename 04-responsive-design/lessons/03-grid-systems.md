@@ -88,516 +88,823 @@
 </body>
 </html>
 
-## Flexbox Layout Systems
+# Flexible Grid Systems & Modern Layouts
 
-### Flexible Navigation Patterns
+## Modern CSS Grid Fundamentals
+
+CSS Grid provides powerful two-dimensional layout capabilities that revolutionize how we create responsive grid systems. Unlike traditional float-based or flexbox grids, CSS Grid offers precise control over both rows and columns.
+
+### CSS Grid Basics
 
 ```css
-/* Responsive Navigation with Flexbox */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: #2c3e50;
-    color: white;
+/* Basic grid container setup */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 1rem;
+    padding: 1rem;
 }
 
-.nav-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
+/* Responsive grid items */
+.grid-item {
+    grid-column: span 12; /* Full width on mobile */
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.nav-link:hover {
-    background-color: rgba(255,255,255,0.1);
-}
-
-/* Mobile Navigation */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 1rem;
+/* Tablet layouts */
+@media (min-width: 768px) {
+    .grid-item {
+        grid-column: span 6; /* Half width on tablet */
     }
     
-    .nav-menu {
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        gap: 0;
+    .grid-item.featured {
+        grid-column: span 12; /* Featured items full width */
     }
     
-    .nav-link {
-        display: block;
-        padding: 1rem;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+    .grid-item.quarter {
+        grid-column: span 3; /* Quarter width for small items */
+    }
+}
+
+/* Desktop layouts */
+@media (min-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(12, 1fr);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .grid-item {
+        grid-column: span 4; /* Third width on desktop */
+    }
+    
+    .grid-item.featured {
+        grid-column: span 8; /* Featured items 2/3 width */
+    }
+    
+    .grid-item.sidebar {
+        grid-column: span 4; /* Sidebar 1/3 width */
     }
 }
 ```
 
-### Component Layout Patterns
+### Advanced Grid Layouts
 
 ```css
-/* Flexible Form Layout */
-.form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.form-row {
-    display: flex;
+/* Complex magazine-style layout */
+.magazine-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, minmax(200px, auto));
     gap: 1rem;
+    padding: 1rem;
 }
 
-.form-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+/* Mobile: Stack all items */
+.magazine-grid .article {
+    grid-column: 1 / -1;
+    grid-row: auto;
 }
 
-.form-group label {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-/* Responsive form adjustments */
-@media (max-width: 480px) {
-    .form-row {
-        flex-direction: column;
+/* Tablet: Two-column layout */
+@media (min-width: 768px) {
+    .magazine-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, minmax(250px, auto));
+    }
+    
+    .article-hero {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+    }
+    
+    .article-secondary {
+        grid-column: 3 / 5;
+        grid-row: 1 / 2;
+    }
+    
+    .article-tertiary {
+        grid-column: 3 / 5;
+        grid-row: 2 / 3;
+    }
+    
+    .article-small {
+        grid-column: span 2;
+        grid-row: 3 / 4;
     }
 }
 
-/* Flexible Media Object */
-.media-object {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+/* Desktop: Full magazine layout */
+@media (min-width: 1024px) {
+    .magazine-grid {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(4, minmax(200px, auto));
+    }
+    
+    .article-hero {
+        grid-column: 1 / 4;
+        grid-row: 1 / 3;
+    }
+    
+    .article-secondary {
+        grid-column: 4 / 7;
+        grid-row: 1 / 2;
+    }
+    
+    .article-tertiary {
+        grid-column: 4 / 6;
+        grid-row: 2 / 3;
+    }
+    
+    .article-sidebar {
+        grid-column: 6 / 7;
+        grid-row: 2 / 4;
+    }
+    
+    .article-small {
+        grid-column: span 2;
+        grid-row: 3 / 4;
+    }
 }
+```
 
-.media-object-image {
-    flex-shrink: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #3498db;
-}
+## Flexbox for Responsive Components
 
-.media-object-content {
-    flex: 1;
-}
+### Flexible Navigation Systems
 
-.media-object-title {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-/* Centered Content Layout */
-.center-layout {
+```css
+/* Mobile-first navigation */
+.navigation {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    text-align: center;
-    padding: 2rem;
+    background: #2c3e50;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100vh;
+    padding: 2rem 0;
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.navigation.active {
+    left: 0;
+}
+
+.nav-item {
+    flex: none;
+    padding: 1rem 2rem;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid #34495e;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #34495e;
+}
+
+/* Tablet: Horizontal navigation */
+@media (min-width: 768px) {
+    .navigation {
+        position: static;
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        background: transparent;
+        padding: 0;
+    }
+    
+    .nav-item {
+        flex: 1;
+        text-align: center;
+        border-bottom: none;
+        border-right: 1px solid #34495e;
+        padding: 1rem;
+    }
+    
+    .nav-item:last-child {
+        border-right: none;
+    }
+}
+
+/* Desktop: Spaced navigation with dropdowns */
+@media (min-width: 1024px) {
+    .navigation {
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .nav-item {
+        flex: none;
+        position: relative;
+        border: none;
+        margin: 0 1rem;
+    }
+    
+    .nav-item:hover .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 200px;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+    }
+}
+```
+
+### Responsive Card Layouts
+
+```css
+/* Flexible card container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Mobile: Full-width cards */
+.card {
+    flex: 1 1 100%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.card-description {
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.card-button {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card-button:hover {
+    background: #2980b9;
+}
+
+/* Tablet: Two cards per row */
+@media (min-width: 768px) {
+    .card {
+        flex: 1 1 calc(50% - 0.5rem);
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .card-actions {
+        flex-wrap: nowrap;
+    }
+    
+    .card-button {
+        flex: none;
+        min-width: 100px;
+    }
+}
+
+/* Desktop: Three cards per row */
+@media (min-width: 1024px) {
+    .card {
+        flex: 1 1 calc(33.333% - 0.67rem);
+    }
+    
+    .card-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+}
+
+/* Large screens: Four cards per row */
+@media (min-width: 1400px) {
+    .card {
+        flex: 1 1 calc(25% - 0.75rem);
+    }
 }
 ```
 
 ## Hybrid Grid + Flexbox Layouts
 
-### Advanced Layout Combinations
+### Dashboard Layout System
 
 ```css
-/* Page layout using both Grid and Flexbox */
-.page-container {
+/* Main dashboard container */
+.dashboard {
     display: grid;
-    grid-template-areas:
-        "header header"
-        "sidebar main"
-        "footer footer";
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: auto 1fr auto;
     min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    gap: 0;
 }
 
-.page-header {
-    grid-area: header;
+/* Header area */
+.dashboard-header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: #34495e;
-    color: white;
-}
-
-.page-sidebar {
-    grid-area: sidebar;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem;
-    background: #ecf0f1;
-}
-
-.page-main {
-    grid-area: main;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-}
-
-.page-footer {
-    grid-area: footer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+    padding: 1rem;
     background: #2c3e50;
     color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* Content sections using flexbox */
-.content-section {
+.dashboard-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.dashboard-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Main content area */
+.dashboard-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    overflow: auto;
+}
+
+/* Sidebar navigation (hidden on mobile) */
+.dashboard-sidebar {
+    display: none;
+}
+
+/* Footer */
+.dashboard-footer {
+    padding: 1rem;
+    background: #ecf0f1;
+    text-align: center;
+    color: #7f8c8d;
+}
+
+/* Widget grid within main content */
+.widget-grid {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.section-header {
+.widget {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.widget-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ecf0f1;
 }
 
-.section-content {
+.widget-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.widget-actions {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
-.content-card {
-    flex: 1 1 300px;
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-    .page-container {
+/* Tablet layout */
+@media (min-width: 768px) {
+    .dashboard {
+        grid-template-columns: auto 1fr;
         grid-template-areas:
-            "header"
-            "main"
-            "sidebar"
-            "footer";
-        grid-template-columns: 1fr;
+            "sidebar header"
+            "sidebar main"
+            "sidebar footer";
     }
     
-    .page-header {
+    .dashboard-header {
+        grid-area: header;
+    }
+    
+    .dashboard-main {
+        grid-area: main;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .dashboard-sidebar {
+        grid-area: sidebar;
+        display: flex;
         flex-direction: column;
+        width: 250px;
+        background: #34495e;
+        padding: 1rem 0;
+    }
+    
+    .dashboard-footer {
+        grid-area: footer;
+    }
+    
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sidebar-item {
+        padding: 1rem 1.5rem;
+        color: #bdc3c7;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+    
+    .sidebar-item:hover,
+    .sidebar-item.active {
+        background-color: #2c3e50;
+        color: white;
+    }
+    
+    .widget-grid {
+        display: contents; /* Let widgets participate in parent grid */
+    }
+    
+    .widget.full-width {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Desktop layout */
+@media (min-width: 1024px) {
+    .dashboard-main {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 2rem;
+    }
+    
+    .widget.half-width {
+        grid-column: span 2;
+    }
+    
+    .widget.third-width {
+        grid-column: span 1;
+    }
+    
+    .widget.full-width {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Large desktop */
+@media (min-width: 1400px) {
+    .dashboard-main {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .widget.quarter-width {
+        grid-column: span 1;
+    }
+    
+    .widget.half-width {
+        grid-column: span 2;
+    }
+    
+    .widget.three-quarter-width {
+        grid-column: span 3;
+    }
+}
+```
+
+### Responsive Form Layouts
+
+```css
+/* Form container */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.form-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+/* Form field groups */
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.field-label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.field-input {
+    padding: 0.75rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.field-error {
+    color: #e74c3c;
+    font-size: 0.875rem;
+}
+
+/* Multi-column layouts for larger screens */
+@media (min-width: 768px) {
+    .form-container {
+        max-width: 800px;
+        padding: 3rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .field-group.full-width {
+        grid-column: 1 / -1;
+    }
+    
+    .field-group.half-width {
+        grid-column: span 1;
+    }
+    
+    /* Inline field groups */
+    .field-group.inline {
+        flex-direction: row;
+        align-items: center;
         gap: 1rem;
     }
     
-    .content-card {
-        flex: 1 1 100%;
+    .field-group.inline .field-label {
+        flex: none;
+        min-width: 120px;
+    }
+    
+    .field-group.inline .field-input {
+        flex: 1;
+    }
+}
+
+/* Form action buttons */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ecf0f1;
+    flex-wrap: wrap;
+}
+
+.form-button {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 120px;
+}
+
+.form-button.primary {
+    background: #3498db;
+    color: white;
+}
+
+.form-button.primary:hover {
+    background: #2980b9;
+}
+
+.form-button.secondary {
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+.form-button.secondary:hover {
+    background: #d5dbdb;
+}
+
+@media (min-width: 768px) {
+    .form-actions {
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+    }
+    
+    .form-button {
+        flex: none;
     }
 }
 ```
 
 ## Custom Grid Framework
 
-### Building a Responsive Grid System
+### CSS Custom Properties Grid System
 
 ```css
-/* Custom 12-column grid system */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -0.5rem;
-}
-
-.col {
-    flex: 1;
-    padding: 0 0.5rem;
-    margin-bottom: 1rem;
-}
-
-/* Column width classes */
-.col-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
-.col-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
-.col-3 { flex: 0 0 25%; max-width: 25%; }
-.col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-.col-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
-.col-6 { flex: 0 0 50%; max-width: 50%; }
-.col-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
-.col-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
-.col-9 { flex: 0 0 75%; max-width: 75%; }
-.col-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
-.col-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
-.col-12 { flex: 0 0 100%; max-width: 100%; }
-
-/* Responsive breakpoints */
-@media (min-width: 576px) {
-    .col-sm-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
-    .col-sm-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
-    .col-sm-3 { flex: 0 0 25%; max-width: 25%; }
-    .col-sm-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-    .col-sm-6 { flex: 0 0 50%; max-width: 50%; }
-    .col-sm-12 { flex: 0 0 100%; max-width: 100%; }
-}
-
-@media (min-width: 768px) {
-    .col-md-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
-    .col-md-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
-    .col-md-3 { flex: 0 0 25%; max-width: 25%; }
-    .col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-    .col-md-6 { flex: 0 0 50%; max-width: 50%; }
-    .col-md-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
-    .col-md-12 { flex: 0 0 100%; max-width: 100%; }
-}
-
-@media (min-width: 992px) {
-    .col-lg-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
-    .col-lg-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
-    .col-lg-3 { flex: 0 0 25%; max-width: 25%; }
-    .col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-    .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
-    .col-lg-9 { flex: 0 0 75%; max-width: 75%; }
-    .col-lg-12 { flex: 0 0 100%; max-width: 100%; }
-}
-
-/* Utility classes */
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.justify-around { justify-content: space-around; }
-.align-center { align-items: center; }
-.align-start { align-items: flex-start; }
-.align-end { align-items: flex-end; }
-
-/* Example usage */
-.example-layout {
-    /* Header spanning full width */
-    .header-row {
-        background: #3498db;
-        color: white;
-        padding: 2rem;
-    }
-    
-    /* Three-column layout on desktop, single column on mobile */
-    .content-row {
-        margin: 2rem 0;
-    }
-    
-    .sidebar {
-        background: #ecf0f1;
-        padding: 1.5rem;
-        border-radius: 8px;
-    }
-    
-    .main-content {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .secondary-sidebar {
-        background: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 8px;
-    }
-}
-```
-
-### Usage Example
-
-```html
-<!-- Custom Grid Framework Usage -->
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <header class="header-row">
-                <h1>Responsive Grid Example</h1>
-            </header>
-        </div>
-    </div>
-    
-    <div class="row content-row">
-        <div class="col-12 col-md-3 col-lg-2">
-            <aside class="sidebar">
-                <h3>Sidebar</h3>
-                <p>Navigation and secondary content</p>
-            </aside>
-        </div>
-        
-        <div class="col-12 col-md-6 col-lg-8">
-            <main class="main-content">
-                <h2>Main Content</h2>
-                <p>Primary content area that adapts to screen size</p>
-            </main>
-        </div>
-        
-        <div class="col-12 col-md-3 col-lg-2">
-            <aside class="secondary-sidebar">
-                <h3>Secondary</h3>
-                <p>Additional information</p>
-            </aside>
-        </div>
-    </div>
-</div>
-```
-
-## Performance Optimization
-
-### Grid System Best Practices
-
-```css
-/* Efficient grid patterns */
-
-/* Use CSS custom properties for consistency */
+/* CSS Grid Framework with Custom Properties */
 :root {
+    --grid-columns: 12;
     --grid-gap: 1rem;
     --grid-max-width: 1200px;
-    --grid-columns: 12;
+    --grid-padding: 1rem;
 }
 
-/* Minimize layout recalculations */
-.efficient-grid {
+/* Container */
+.container {
+    width: 100%;
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+    padding: 0 var(--grid-padding);
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0 var(--grid-padding);
+}
+
+/* Grid system */
+.row {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), 1fr);
     gap: var(--grid-gap);
-    max-width: var(--grid-max-width);
-    margin: 0 auto;
-    
-    /* Use contain for better performance */
-    contain: layout style;
+    width: 100%;
 }
 
-/* Prefer transform over changing layout properties */
-.animated-grid-item {
-    transition: transform 0.3s ease, opacity 0.3s ease;
+/* Column classes */
+.col {
+    grid-column: 1 / -1; /* Full width by default */
 }
 
-.animated-grid-item:hover {
-    transform: translateY(-5px) scale(1.02);
+/* Generate column classes */
+.col-1 { grid-column: span 1; }
+.col-2 { grid-column: span 2; }
+.col-3 { grid-column: span 3; }
+.col-4 { grid-column: span 4; }
+.col-5 { grid-column: span 5; }
+.col-6 { grid-column: span 6; }
+.col-7 { grid-column: span 7; }
+.col-8 { grid-column: span 8; }
+.col-9 { grid-column: span 9; }
+.col-10 { grid-column: span 10; }
+.col-11 { grid-column: span 11; }
+.col-12 { grid-column: span 12; }
+
+/* Responsive column classes */
+@media (min-width: 576px) {
+    .col-sm-1 { grid-column: span 1; }
+    .col-sm-2 { grid-column: span 2; }
+    .col-sm-3 { grid-column: span 3; }
+    .col-sm-4 { grid-column: span 4; }
+    .col-sm-5 { grid-column: span 5; }
+    .col-sm-6 { grid-column: span 6; }
+    .col-sm-7 { grid-column: span 7; }
+    .col-sm-8 { grid-column: span 8; }
+    .col-sm-9 { grid-column: span 9; }
+    .col-sm-10 { grid-column: span 10; }
+    .col-sm-11 { grid-column: span 11; }
+    .col-sm-12 { grid-column: span 12; }
 }
 
-/* Avoid frequent flex-basis changes */
-.performance-flex {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+@media (min-width: 768px) {
+    .col-md-1 { grid-column: span 1; }
+    .col-md-2 { grid-column: span 2; }
+    .col-md-3 { grid-column: span 3; }
+    .col-md-4 { grid-column: span 4; }
+    .col-md-5 { grid-column: span 5; }
+    .col-md-6 { grid-column: span 6; }
+    .col-md-7 { grid-column: span 7; }
+    .col-md-8 { grid-column: span 8; }
+    .col-md-9 { grid-column: span 9; }
+    .col-md-10 { grid-column: span 10; }
+    .col-md-11 { grid-column: span 11; }
+    .col-md-12 { grid-column: span 12; }
 }
 
-.performance-flex-item {
-    flex: 1 1 300px; /* Fixed flex-basis for consistency */
-    min-width: 0; /* Prevent overflow */
+@media (min-width: 992px) {
+    .col-lg-1 { grid-column: span 1; }
+    .col-lg-2 { grid-column: span 2; }
+    .col-lg-3 { grid-column: span 3; }
+    .col-lg-4 { grid-column: span 4; }
+    .col-lg-5 { grid-column: span 5; }
+    .col-lg-6 { grid-column: span 6; }
+    .col-lg-7 { grid-column: span 7; }
+    .col-lg-8 { grid-column: span 8; }
+    .col-lg-9 { grid-column: span 9; }
+    .col-lg-10 { grid-column: span 10; }
+    .col-lg-11 { grid-column: span 11; }
+    .col-lg-12 { grid-column: span 12; }
 }
+
+@media (min-width: 1200px) {
+    .col-xl-1 { grid-column: span 1; }
+    .col-xl-2 { grid-column: span 2; }
+    .col-xl-3 { grid-column: span 3; }
+    .col-xl-4 { grid-column: span 4; }
+    .col-xl-5 { grid-column: span 5; }
+    .col-xl-6 { grid-column: span 6; }
+    .col-xl-7 { grid-column: span 7; }
+    .col-xl-8 { grid-column: span 8; }
+    .col-xl-9 { grid-column: span 9; }
+    .col-xl-10 { grid-column: span 10; }
+    .col-xl-11 { grid-column: span 11; }
+    .col-xl-12 { grid-column: span 12; }
+}
+
+/* Grid utilities */
+.gap-0 { gap: 0; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 1rem; }
+.gap-4 { gap: 1.5rem; }
+.gap-5 { gap: 3rem; }
+
+/* Alignment utilities */
+.justify-start { justify-content: start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: end; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-evenly { justify-content: space-evenly; }
+
+.align-start { align-content: start; }
+.align-center { align-content: center; }
+.align-end { align-content: end; }
+.align-stretch { align-content: stretch; }
+
+.items-start { align-items: start; }
+.items-center { align-items: center; }
+.items-end { align-items: end; }
+.items-stretch { align-items: stretch; }
 ```
 
-## Grid System Troubleshooting
-
-### Common Issues and Solutions
-
-```css
-/* Fix: Grid items overflowing container */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-    
-    /* Ensure container constrains items */
-    overflow: hidden;
-}
-
-.grid-item {
-    /* Prevent text overflow */
-    overflow-wrap: break-word;
-    min-width: 0;
-}
-
-/* Fix: Uneven grid item heights in flexbox */
-.equal-height-flex {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.flex-item {
-    flex: 1 1 300px;
-    display: flex; /* Make item a flex container */
-    flex-direction: column;
-}
-
-.flex-item-content {
-    flex: 1; /* Content area grows to fill available space */
-}
-
-.flex-item-footer {
-    margin-top: auto; /* Push footer to bottom */
-}
-
-/* Fix: Grid gaps on mobile */
-@media (max-width: 480px) {
-    .mobile-optimized-grid {
-        gap: 0.5rem; /* Smaller gaps on mobile */
-        padding: 0.5rem; /* Account for container padding */
-    }
-}
-
-/* Fix: Nested grid issues */
-.parent-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-}
-
-.nested-grid {
-    display: grid;
-    grid-template-columns: subgrid; /* Use subgrid when supported */
-    gap: 1rem;
-}
-
-/* Fallback for browsers without subgrid */
-@supports not (grid-template-columns: subgrid) {
-    .nested-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-```
+This comprehensive grid systems lesson provides students with modern techniques for creating flexible, responsive layouts using CSS Grid, Flexbox, and hybrid approaches.

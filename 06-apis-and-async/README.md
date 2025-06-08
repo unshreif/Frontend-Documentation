@@ -30,6 +30,10 @@ Learn to work with external APIs and handle asynchronous operations.
 6. [Working with JSON](./lessons/06-json-data.md)
 7. [API Authentication](./lessons/07-authentication.md)
 8. [Performance & Caching](./lessons/08-performance.md)
+9. [WebSockets & Real-time Communication](./lessons/09-websockets.md)
+10. [Service Workers & Background Sync](./lessons/10-service-workers.md)
+11. [Advanced Patterns & Architecture](./lessons/11-advanced-patterns.md)
+12. [Testing Async Code](./lessons/12-testing-async.md)
 
 ## 🛠️ Exercises
 

@@ -1,270 +1,421 @@
-# ES6+ Modern JavaScript Features
+# ES6+ Features and Modern JavaScript
+
+## Introduction
+
+ES6 (ECMAScript 2015) and subsequent versions introduced revolutionary features that transformed JavaScript development. This lesson covers essential modern JavaScript features that every developer should master.
+
+## Let and Const Declarations
+
+### Block Scope vs Function Scope
+```javascript
+// var: Function-scoped, hoisted
+function oldWay() {
+    if (true) {
+        var x = 1;
+    }
+    console.log(x); // 1 - accessible outside block
+}
+
+// let/const: Block-scoped
+function modernWay() {
+    if (true) {
+        let y = 1;
+        const z = 2;
+    }
+    // console.log(y); // ReferenceError: y is not defined
+}
+
+// Hoisting differences
+console.log(hoistedVar); // undefined (not error)
+var hoistedVar = 'I am hoisted';
+
+// console.log(notHoisted); // ReferenceError
+let notHoisted = 'I cause an error';
+```
+
+### Const Deep Dive
+```javascript
+// Const prevents reassignment, not mutation
+const user = { name: 'John', age: 30 };
+user.age = 31; // ✅ Allowed - mutating object
+// user = {}; // ❌ Error - reassigning variable
+
+const numbers = [1, 2, 3];
+numbers.push(4); // ✅ Allowed - mutating array
+// numbers = []; // ❌ Error - reassigning variable
+
+// For true immutability, use Object.freeze()
+const immutableUser = Object.freeze({ name: 'John', age: 30 });
+// immutableUser.age = 31; // Silently fails in non-strict mode
+```
+
+## Arrow Functions
+
+### Syntax Variations
+```javascript
+// Traditional function
+function add(a, b) {
+    return a + b;
+}
+
+// Arrow function variations
+const add1 = (a, b) => a + b;                    // Implicit return
+const add2 = (a, b) => { return a + b; };       // Explicit return
+const square = x => x * x;                       // Single parameter
+const greet = () => 'Hello World';               // No parameters
+const getObject = () => ({ name: 'John' });     // Returning object literal
+
+// Multi-line arrow functions
+const processData = (data) => {
+    const processed = data.map(item => item * 2);
+    const filtered = processed.filter(item => item > 10);
+    return filtered;
+};
+```
+
+### Lexical `this` Binding
+```javascript
+// Traditional function context issues
+const counter = {
+    count: 0,
+    
+    // This doesn't work as expected
+    increment: function() {
+        setTimeout(function() {
+            this.count++; // `this` refers to window/global, not counter
+            console.log(this.count);
+        }, 1000);
+    },
+    
+    // Old solution with bind
+    incrementBound: function() {
+        setTimeout(function() {
+            this.count++;
+            console.log(this.count);
+        }.bind(this), 1000);
+    },
+    
+    // Arrow function solution
+    incrementArrow: function() {
+        setTimeout(() => {
+            this.count++; // `this` refers to counter object
+            console.log(this.count);
+        }, 1000);
+    }
+};
+
+// Real-world example: Event handlers
+class Button {
+    constructor(element) {
+        this.element = element;
+        this.clickCount = 0;
+        
+        // Arrow function preserves `this`
+        this.element.addEventListener('click', () => {
+            this.clickCount++;
+            this.updateDisplay();
+        });
+    }
+    
+    updateDisplay() {
+        this.element.textContent = `Clicked ${this.clickCount} times`;
+    }
+}
+```
 
 ## Template Literals
 
+### Basic Template Literals
 ```javascript
-// Old way
-const name = "John";
+const name = 'John';
 const age = 30;
-const message = "Hello, my name is " + name + " and I am " + age + " years old.";
 
-// ES6 way
-const message = `Hello, my name is ${name} and I am ${age} years old.`;
+// Old string concatenation
+const oldMessage = 'Hello, my name is ' + name + ' and I am ' + age + ' years old.';
+
+// Template literal
+const newMessage = `Hello, my name is ${name} and I am ${age} years old.`;
 
 // Multi-line strings
-const html = `
-    <div class="card">
+const htmlTemplate = `
+    <div class="user-card">
         <h2>${name}</h2>
         <p>Age: ${age}</p>
+        <p>Status: ${age >= 18 ? 'Adult' : 'Minor'}</p>
     </div>
 `;
 
-// Expression evaluation
-const price = 19.99;
-const tax = 0.08;
-const total = `Total: $${(price * (1 + tax)).toFixed(2)}`;
+// Complex expressions
+const product = { name: 'Laptop', price: 999.99 };
+const discount = 0.1;
+const message = `
+    Product: ${product.name}
+    Original Price: $${product.price}
+    Discount: ${(discount * 100)}%
+    Final Price: $${(product.price * (1 - discount)).toFixed(2)}
+`;
 ```
 
-## Enhanced Object Literals
-
+### Tagged Template Literals
 ```javascript
-const name = "John";
-const age = 30;
+// Custom template tag function
+function highlight(strings, ...values) {
+    return strings.reduce((result, string, i) => {
+        const value = values[i] ? `<mark>${values[i]}</mark>` : '';
+        return result + string + value;
+    }, '');
+}
 
-// Shorthand property names
-const person = { name, age }; // Same as { name: name, age: age }
+const searchTerm = 'JavaScript';
+const text = 'Learning';
+const highlighted = highlight`${text} ${searchTerm} is fun!`;
+// Result: "Learning <mark>JavaScript</mark> is fun!"
 
-// Method shorthand
-const calculator = {
-    add(a, b) { return a + b; }, // Same as add: function(a, b) { return a + b; }
-    subtract(a, b) { return a - b; }
+// SQL query builder (sanitization example)
+function sql(strings, ...values) {
+    return strings.reduce((query, string, i) => {
+        let value = values[i];
+        if (typeof value === 'string') {
+            value = `'${value.replace(/'/g, "''")}'`; // Basic SQL escaping
+        }
+        return query + string + (value !== undefined ? value : '');
+    }, '');
+}
+
+const userId = 123;
+const username = "O'Connor";
+const query = sql`SELECT * FROM users WHERE id = ${userId} AND name = ${username}`;
+// Result: "SELECT * FROM users WHERE id = 123 AND name = 'O''Connor'"
+```
+
+## Destructuring Assignment
+
+### Array Destructuring
+```javascript
+const colors = ['red', 'green', 'blue', 'yellow'];
+
+// Basic destructuring
+const [first, second] = colors;
+console.log(first);  // 'red'
+console.log(second); // 'green'
+
+// Skipping elements
+const [primary, , tertiary] = colors;
+console.log(primary);  // 'red'
+console.log(tertiary); // 'blue'
+
+// Default values
+const [a, b, c, d = 'purple'] = ['red', 'green'];
+console.log(d); // 'purple'
+
+// Rest operator
+const [head, ...tail] = colors;
+console.log(head); // 'red'
+console.log(tail); // ['green', 'blue', 'yellow']
+
+// Swapping variables
+let x = 1, y = 2;
+[x, y] = [y, x];
+console.log(x, y); // 2, 1
+
+// Nested array destructuring
+const matrix = [[1, 2], [3, 4]];
+const [[a1, b1], [a2, b2]] = matrix;
+```
+
+### Object Destructuring
+```javascript
+const person = {
+    name: 'John Doe',
+    age: 30,
+    email: 'john@example.com',
+    address: {
+        street: '123 Main St',
+        city: 'New York',
+        zipCode: '10001'
+    },
+    hobbies: ['reading', 'coding', 'traveling']
 };
 
-// Computed property names
-const property = "dynamicKey";
-const obj = {
-    [property]: "value",
-    [`${property}Modified`]: "modified value"
-};
+// Basic destructuring
+const { name, age } = person;
+
+// Renaming variables
+const { name: fullName, age: years } = person;
+
+// Default values
+const { phone = 'Not provided' } = person;
+
+// Nested destructuring
+const { address: { city, zipCode } } = person;
+
+// Rest properties
+const { name: personName, ...otherDetails } = person;
+
+// Destructuring in function parameters
+function greetUser({ name, age = 0 }) {
+    return `Hello ${name}, you are ${age} years old`;
+}
+
+// Destructuring arrays within objects
+const { hobbies: [firstHobby, ...otherHobbies] } = person;
 ```
 
-## Default Parameters
+## Spread and Rest Operators
 
+### Spread Operator (...)
 ```javascript
-// Old way
-function greet(name, greeting) {
-    name = name || "Guest";
-    greeting = greeting || "Hello";
-    return greeting + ", " + name + "!";
-}
-
-// ES6 way
-function greet(name = "Guest", greeting = "Hello") {
-    return `${greeting}, ${name}!`;
-}
-
-// With expressions
-function createUser(name, role = "user", id = Date.now()) {
-    return { name, role, id };
-}
-
-// Destructured defaults
-function processOptions({ color = "blue", size = "medium" } = {}) {
-    return { color, size };
-}
-```
-
-## Rest and Spread Operators
-
-### Rest Parameters
-```javascript
-// Collect remaining arguments
-function sum(...numbers) {
-    return numbers.reduce((total, num) => total + num, 0);
-}
-
-sum(1, 2, 3, 4); // 10
-
-// Rest with other parameters
-function logMessage(level, ...messages) {
-    console.log(`[${level}]`, ...messages);
-}
-```
-
-### Spread Operator
-```javascript
-// Arrays
+// Array spreading
 const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
 const combined = [...arr1, ...arr2]; // [1, 2, 3, 4, 5, 6]
 
-// Objects
-const obj1 = { a: 1, b: 2 };
-const obj2 = { c: 3, d: 4 };
-const merged = { ...obj1, ...obj2 }; // { a: 1, b: 2, c: 3, d: 4 }
-
-// Function calls
+// Function arguments
+function sum(a, b, c) {
+    return a + b + c;
+}
 const numbers = [1, 2, 3];
-console.log(Math.max(...numbers)); // Same as Math.max(1, 2, 3)
+console.log(sum(...numbers)); // 6
 
-// Copying arrays/objects
-const originalArray = [1, 2, 3];
-const copiedArray = [...originalArray];
+// Copying arrays (shallow)
+const original = [1, 2, 3];
+const copy = [...original];
 
-const originalObject = { name: "John", age: 30 };
-const copiedObject = { ...originalObject };
+// Object spreading
+const user = { name: 'John', age: 30 };
+const userWithEmail = { ...user, email: 'john@example.com' };
+
+// Overriding properties
+const updatedUser = { ...user, age: 31, city: 'Boston' };
+
+// Spreading in function calls
+Math.max(...[1, 5, 3, 9, 2]); // 9
+
+// Converting NodeList to Array
+const elements = [...document.querySelectorAll('.item')];
 ```
 
-## Array Methods
-
-### find() and findIndex()
+### Rest Parameters
 ```javascript
-const users = [
-    { id: 1, name: "John", active: true },
-    { id: 2, name: "Jane", active: false },
-    { id: 3, name: "Bob", active: true }
-];
+// Rest parameters in functions
+function multiply(multiplier, ...numbers) {
+    return numbers.map(num => num * multiplier);
+}
 
-const activeUser = users.find(user => user.active); // First active user
-const inactiveIndex = users.findIndex(user => !user.active); // Index of first inactive user
-```
+multiply(2, 1, 2, 3, 4); // [2, 4, 6, 8]
 
-### includes()
-```javascript
-const fruits = ["apple", "banana", "orange"];
-console.log(fruits.includes("banana")); // true
-console.log(fruits.includes("grape")); // false
+// Rest with destructuring
+function processOrder({ item, quantity = 1, ...options }) {
+    console.log('Item:', item);
+    console.log('Quantity:', quantity);
+    console.log('Options:', options);
+}
 
-// With strings
-const text = "Hello World";
-console.log(text.includes("World")); // true
-```
-
-### Array.from()
-```javascript
-// Convert string to array
-const letters = Array.from("hello"); // ["h", "e", "l", "l", "o"]
-
-// Convert NodeList to array
-const divs = Array.from(document.querySelectorAll("div"));
-
-// With mapping function
-const squares = Array.from({ length: 5 }, (_, i) => i * i); // [0, 1, 4, 9, 16]
-```
-
-## Object Methods
-
-### Object.assign()
-```javascript
-const target = { a: 1 };
-const source1 = { b: 2 };
-const source2 = { c: 3 };
-
-const result = Object.assign(target, source1, source2);
-// target is now { a: 1, b: 2, c: 3 }
-
-// Creating new object (don't mutate target)
-const newObj = Object.assign({}, target, source1, source2);
-```
-
-### Object.keys(), Object.values(), Object.entries()
-```javascript
-const person = { name: "John", age: 30, city: "New York" };
-
-const keys = Object.keys(person); // ["name", "age", "city"]
-const values = Object.values(person); // ["John", 30, "New York"]
-const entries = Object.entries(person); // [["name", "John"], ["age", 30], ["city", "New York"]]
-
-// Useful for iteration
-Object.entries(person).forEach(([key, value]) => {
-    console.log(`${key}: ${value}`);
+processOrder({
+    item: 'Laptop',
+    quantity: 2,
+    color: 'Silver',
+    warranty: '2 years'
 });
 ```
 
-## Let and Const
+## Enhanced Object Literals
 
+### Shorthand Properties and Methods
 ```javascript
-// Block scoping
-if (true) {
-    let blockScoped = "I'm block scoped";
-    const alsoBlockScoped = "Me too";
-    var functionScoped = "I'm function scoped";
-}
+const name = 'John';
+const age = 30;
 
-// console.log(blockScoped); // ReferenceError
-// console.log(alsoBlockScoped); // ReferenceError
-console.log(functionScoped); // "I'm function scoped"
-
-// Const with objects/arrays
-const person = { name: "John" };
-person.name = "Jane"; // OK - modifying property
-person.age = 30; // OK - adding property
-// person = {}; // Error - can't reassign
-
-const numbers = [1, 2, 3];
-numbers.push(4); // OK - modifying array
-// numbers = []; // Error - can't reassign
-```
-
-## For...of and For...in Loops
-
-```javascript
-const fruits = ["apple", "banana", "orange"];
-
-// For...of (values)
-for (const fruit of fruits) {
-    console.log(fruit); // apple, banana, orange
-}
-
-// For...in (indices/keys)
-for (const index in fruits) {
-    console.log(index, fruits[index]); // 0 apple, 1 banana, 2 orange
-}
-
-// With objects
-const person = { name: "John", age: 30 };
-
-for (const key in person) {
-    console.log(key, person[key]); // name John, age 30
-}
-
-// For...of with entries
-for (const [index, fruit] of fruits.entries()) {
-    console.log(index, fruit); // 0 apple, 1 banana, 2 orange
-}
-```
-
-## Exercise
-
-Refactor legacy JavaScript code to use modern ES6+ features:
-
-```javascript
-// Legacy code to refactor
-function processUsers(users, options) {
-    options = options || {};
-    var activeOnly = options.activeOnly || false;
-    var sortBy = options.sortBy || 'name';
-    
-    var result = [];
-    for (var i = 0; i < users.length; i++) {
-        var user = users[i];
-        if (!activeOnly || user.active) {
-            result.push({
-                id: user.id,
-                name: user.name,
-                status: user.active ? 'Active' : 'Inactive'
-            });
-        }
+// Old syntax
+const oldObject = {
+    name: name,
+    age: age,
+    greet: function() {
+        return 'Hello!';
     }
-    
-    result.sort(function(a, b) {
-        if (a[sortBy] < b[sortBy]) return -1;
-        if (a[sortBy] > b[sortBy]) return 1;
-        return 0;
-    });
-    
-    return result;
-}
+};
+
+// Enhanced object literals
+const newObject = {
+    name,        // Shorthand property
+    age,         // Shorthand property
+    greet() {    // Method shorthand
+        return 'Hello!';
+    },
+    // Arrow function property
+    sayBye: () => 'Goodbye!'
+};
 ```
 
-Refactor using: arrow functions, destructuring, default parameters, array methods, template literals.
+### Computed Property Names
+```javascript
+const prefix = 'user';
+const id = 123;
+
+const dynamicObject = {
+    [prefix + 'Name']: 'John',
+    [prefix + 'Id']: id,
+    [`${prefix}_active`]: true,
+    [Symbol.iterator]: function*() {
+        yield this.userName;
+        yield this.userId;
+        yield this.user_active;
+    }
+};
+
+// Dynamic property creation
+function createObject(key, value) {
+    return {
+        [key]: value,
+        [`${key}_timestamp`]: Date.now()
+    };
+}
+
+const result = createObject('data', 'important value');
+// { data: 'important value', data_timestamp: 1699123456789 }
+```
+
+## Modules (Import/Export)
+
+### Named Exports and Imports
+```javascript
+// math.js - Named exports
+export const PI = 3.14159;
+
+export function add(a, b) {
+    return a + b;
+}
+
+export function multiply(a, b) {
+    return a * b;
+}
+
+// Alternative export syntax
+function subtract(a, b) {
+    return a - b;
+}
+
+function divide(a, b) {
+    return b !== 0 ? a / b : null;
+}
+
+export { subtract, divide };
+
+// Exporting with aliases
+export { divide as safeDivide };
+```
+
+```javascript
+// main.js - Named imports
+import { add, multiply, PI } from './math.js';
+
+// Import with aliases
+import { add as sum, multiply as product } from './math.js';
+
+// Import all as namespace
+import * as MathUtils from './math.js';
+console.log(MathUtils.add(5, 3));
+
+// Selective imports
+import { add } from './math.js';
+```
