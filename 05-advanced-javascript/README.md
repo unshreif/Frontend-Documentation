@@ -1,236 +1,131 @@
-# Advanced JavaScript
-
-Master modern JavaScript for building dynamic, interactive applications and understanding professional development patterns.
+# Advanced JavaScript Course
 
 ## Course Overview
 
-This module covers advanced JavaScript concepts essential for modern web development, from ES6+ features to performance optimization and architectural patterns.
+This comprehensive course covers advanced JavaScript concepts, patterns, and modern development practices. Designed for developers who have mastered the fundamentals and want to deepen their JavaScript expertise.
 
-## Learning Objectives
+## Course Structure
 
-By the end of this module, you will be able to:
-- Write modern JavaScript using ES6+ features
-- Master asynchronous programming patterns
-- Implement object-oriented and functional programming paradigms
-- Build scalable applications using advanced patterns
-- Optimize JavaScript performance
-- Work with modern web APIs
-- Handle errors gracefully and debug effectively
+### Module 1: Modern JavaScript Fundamentals
+- **Lesson 01**: [ES6+ Features and Modern JavaScript](./lessons/01-es6-features.md)
+- **Lesson 02**: [Arrow Functions Deep Dive](./lessons/02-arrow-functions.md)
+- **Lesson 03**: [Destructuring, Spread & Advanced Patterns](./lessons/03-destructuring-spread.md)
 
-## Lessons
+### Module 2: Functions and Scope
+- **Lesson 04**: [Functions and Closures](./lessons/02-functions-closures.md)
+- **Lesson 05**: [Promises, Async/Await & Concurrency](./lessons/04-async-javascript.md)
 
-### [01. ES6+ Features and Modern Syntax](./lessons/01-es6-features.md)
-**Duration: 3-4 hours**
-- Arrow functions and lexical scoping
-- Template literals and tagged templates
-- Destructuring assignment
-- Spread and rest operators
-- Enhanced object literals
-- Modules (import/export)
-- Symbols and iterators
+### Module 3: Object-Oriented Programming
+- **Lesson 06**: [Classes, OOP & Design Patterns](./lessons/05-classes-oop.md)
+- **Lesson 07**: [Memory Management & Performance](./lessons/05-performance.md)
 
-**Key Projects:**
-- Modern utility library
-- Module-based application structure
+### Module 4: Advanced Patterns and Architecture
+- **Lesson 08**: [Advanced Patterns](./lessons/07-advanced-patterns.md)
+- **Lesson 09**: [Modules & Code Organization](./lessons/09-modules.md)
+- **Lesson 10**: [Error Handling & Debugging](./lessons/10-error-handling.md)
 
-### [02. Functions and Closures](./lessons/02-functions-closures.md)
-**Duration: 2-3 hours**
-- Function expressions vs declarations
-- Closures and lexical scope
-- Higher-order functions
-- Currying and partial application
-- Function composition
-- Immediately Invoked Function Expressions (IIFE)
+### Module 5: Web APIs and Browser Integration
+- **Lesson 11**: [Web APIs](./lessons/08-web-apis.md)
+- **Lesson 12**: [DOM Manipulation & Events](./lessons/11-dom-events.md)
+- **Lesson 13**: [Storage & State Management](./lessons/12-storage-state.md)
 
-**Key Projects:**
-- Functional programming utilities
-- Closure-based data privacy
+### Module 6: Testing and Quality Assurance
+- **Lesson 14**: [Testing Strategies](./lessons/13-testing.md)
+- **Lesson 15**: [Code Quality & Linting](./lessons/14-code-quality.md)
 
-### [03. Destructuring and Spread Operators](./lessons/03-destructuring-spread.md)
-**Duration: 2 hours**
-- Array destructuring patterns
-- Object destructuring with defaults
-- Parameter destructuring
-- Spread operator applications
-- Rest parameters
-- Practical use cases
+### Module 7: Performance and Optimization
+- **Lesson 16**: [Performance Optimization](./lessons/15-performance-optimization.md)
+- **Lesson 17**: [Build Tools & Workflow](./lessons/16-build-tools.md)
 
-**Key Projects:**
-- Data transformation utilities
-- Configuration management system
-
-### [04. Asynchronous JavaScript](./lessons/04-async-javascript.md)
-**Duration: 4-5 hours**
-- Promises and promise chains
-- Async/await syntax
-- Error handling in async code
-- Promise.all, Promise.race, Promise.allSettled
-- Fetch API and HTTP requests
-- Generators and iterators
-
-**Key Projects:**
-- API client library
-- Async data processing pipeline
-
-### [05. Object-Oriented Programming](./lessons/05-classes-oop.md)
-**Duration: 3-4 hours**
-- ES6 Classes and inheritance
-- Private fields and methods
-- Static methods and properties
-- Composition vs inheritance
-- Design patterns (Factory, Observer, Module)
-- Prototypal inheritance
-
-**Key Projects:**
-- Component library
-- Game engine architecture
-
-### [06. Performance Optimization](./lessons/05-performance.md)
-**Duration: 2-3 hours**
-- Performance measurement
-- Memory management
-- Garbage collection
-- Event loop understanding
-- Debouncing and throttling
-- Lazy loading and code splitting
-
-**Key Projects:**
-- Performance monitoring dashboard
-- Optimized data visualization
-
-### [07. Memory Management](./lessons/06-memory-management.md)
-**Duration: 2 hours**
-- Memory lifecycle
-- Garbage collection strategies
-- Memory leaks prevention
-- WeakMap and WeakSet
-- Performance profiling
-
-**Key Projects:**
-- Memory-efficient data structures
-- Leak detection utilities
-
-### [08. Advanced Patterns](./lessons/07-advanced-patterns.md)
-**Duration: 3-4 hours**
-- Module patterns
-- Revealing module pattern
-- Observer/Pub-Sub pattern
-- Command pattern
-- Strategy pattern
-- Decorator pattern
-
-**Key Projects:**
-- Event system implementation
-- Plugin architecture
-
-### [09. Web APIs and Browser Features](./lessons/08-web-apis.md)
-**Duration: 3-4 hours**
-- DOM manipulation best practices
-- Web Storage (localStorage, sessionStorage)
-- Web Workers
-- Service Workers basics
-- Geolocation API
-- File API
-- WebRTC basics
-
-**Key Projects:**
-- Progressive Web App features
-- Real-time communication system
+### Module 8: Advanced Topics
+- **Lesson 18**: [TypeScript Integration](./lessons/17-typescript.md)
+- **Lesson 19**: [Node.js Fundamentals](./lessons/18-nodejs.md)
+- **Lesson 20**: [Security Best Practices](./lessons/19-security.md)
 
 ## Prerequisites
 
-Before starting this module, you should be comfortable with:
-- JavaScript fundamentals (variables, functions, loops, conditionals)
-- Basic DOM manipulation
-- Understanding of HTML and CSS
-- Problem-solving with JavaScript
+- Solid understanding of JavaScript fundamentals
+- Experience with HTML and CSS
+- Basic knowledge of programming concepts
+- Familiarity with browser developer tools
 
-## Development Environment Setup
+## Learning Objectives
 
-### Required Tools
-```bash
-# Node.js (for running JavaScript outside browser)
-node --version  # Should be 16+ for modern features
+By the end of this course, you will:
 
-# Package manager
-npm --version   # or yarn --version
+1. **Master Modern JavaScript**: Write clean, efficient code using ES6+ features
+2. **Understand Advanced Patterns**: Implement design patterns and architectural concepts
+3. **Build Scalable Applications**: Structure large JavaScript applications effectively
+4. **Optimize Performance**: Identify and resolve performance bottlenecks
+5. **Test Thoroughly**: Write comprehensive tests for your JavaScript code
+6. **Deploy Confidently**: Use modern build tools and deployment strategies
 
-# Code editor with JavaScript support
-# VS Code with extensions:
-# - ES6 code snippets
-# - JavaScript (ES6) code snippets
-# - Bracket Pair Colorizer
-```
+## Course Projects
 
-### Project Structure
-```
-05-advanced-javascript/
-├── lessons/
-│   ├── 01-es6-features.md
-│   ├── 02-functions-closures.md
-│   ├── 03-destructuring-spread.md
-│   ├── 04-async-javascript.md
-│   ├── 05-classes-oop.md
-│   ├── 05-performance.md
-│   ├── 06-memory-management.md
-│   ├── 07-advanced-patterns.md
-│   └── 08-web-apis.md
-├── exercises/
-│   ├── module-system/
-│   ├── async-patterns/
-│   ├── oop-examples/
-│   └── performance-demos/
-├── projects/
-│   ├── utility-library/
-│   ├── api-client/
-│   ├── component-framework/
-│   └── performance-monitor/
-└── README.md
-```
+### Project 1: Task Management Application
+Build a sophisticated task management app demonstrating:
+- ES6+ features and modern syntax
+- Object-oriented design patterns
+- Local storage and state management
+- Performance optimization techniques
 
-## Assessment and Projects
+### Project 2: Real-time Chat Application
+Create a real-time messaging system featuring:
+- WebSocket communication
+- Error handling and resilience
+- Memory management
+- Testing strategies
 
-### Module Capstone Project
-Build a **Modern JavaScript Application Framework** that demonstrates:
-- Modular architecture using ES6 modules
-- Async data management
-- Component-based structure
-- Performance optimization
-- Error handling and debugging tools
+### Project 3: Data Visualization Dashboard
+Develop an interactive dashboard showcasing:
+- Advanced async patterns
+- Web APIs integration
+- Performance monitoring
+- Build tool configuration
 
-### Assessment Criteria
-- **Code Quality** (25%): Clean, readable, well-commented code
-- **Modern Features** (25%): Proper use of ES6+ features
-- **Performance** (20%): Optimized and efficient implementation
-- **Architecture** (20%): Well-structured, maintainable design
-- **Error Handling** (10%): Robust error management
+## Resources
 
-## Resources and References
+### Essential Tools
+- **Code Editor**: VS Code with JavaScript extensions
+- **Browser**: Chrome/Firefox with DevTools
+- **Node.js**: Latest LTS version
+- **Package Manager**: npm or yarn
 
-### Books
+### Recommended Reading
 - "You Don't Know JS" series by Kyle Simpson
 - "Eloquent JavaScript" by Marijn Haverbeke
 - "JavaScript: The Good Parts" by Douglas Crockford
+- MDN Web Docs (developer.mozilla.org)
 
 ### Online Resources
-- [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
 - [JavaScript.info](https://javascript.info/)
-- [ES6 Features](http://es6-features.org/)
+- [MDN JavaScript Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [TC39 Proposals](https://github.com/tc39/proposals)
+- [Can I Use](https://caniuse.com/)
 
-### Tools and Libraries
-- [ESLint](https://eslint.org/) - Code linting
-- [Prettier](https://prettier.io/) - Code formatting
-- [Babel](https://babeljs.io/) - JavaScript compiler
-- [Jest](https://jestjs.io/) - Testing framework
+## Getting Started
 
-## Next Steps
+1. Clone or download the course materials
+2. Ensure you have Node.js installed
+3. Start with Lesson 01 and progress sequentially
+4. Complete the exercises and projects
+5. Join our community discussions
 
-After completing this module, you'll be ready for:
-- **React.js Fundamentals** - Building modern user interfaces
-- **Node.js Development** - Server-side JavaScript
-- **TypeScript** - Typed JavaScript for larger applications
-- **Advanced Frameworks** - Vue.js, Angular, or advanced React patterns
+## Assessment and Certification
+
+- Complete all lesson exercises (40%)
+- Finish course projects (40%)
+- Final comprehensive assessment (20%)
+
+Successfully completing all requirements earns you an Advanced JavaScript Developer certificate.
+
+## Support
+
+- **Discussion Forum**: Ask questions and share insights
+- **Office Hours**: Weekly live Q&A sessions
+- **Code Reviews**: Submit projects for expert feedback
+- **Community**: Connect with fellow learners
 
 ---
 
-**Note**: This module focuses on vanilla JavaScript concepts that apply across all frameworks and environments. Master these fundamentals before moving to specialized libraries or frameworks.
+*Happy coding! 🚀*
